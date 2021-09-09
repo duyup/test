@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TEST</string>
+    <string name="beacon">Beacon</string>
+    <string name="check">Check</string>
+</resources>
