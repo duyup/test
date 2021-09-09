@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
       exit(1);
    }
 
-   hserv_sock = socket(PF_INET, SOCK_STREAM, 0); //소켓생성
+   hserv_sock = socket(PF_INET, SOCK_STREAM, 0); 
 
    if (hserv_sock == -1)
       ErrorHandling("socket() error");
@@ -38,34 +38,34 @@ int main(int argc, char *argv[])
    serv_adr.sin_addr.s_addr = htonl(INADDR_ANY);
    serv_adr.sin_port = htons(atoi(argv[1]));
 
-   if (bind(hserv_sock, (struct sockaddr*)&serv_adr, sizeof(serv_adr)) == -1) //IP주소와 PORT 번호 할당
+   if (bind(hserv_sock, (struct sockaddr*)&serv_adr, sizeof(serv_adr)) == -1) 
       ErrorHandling("bind() error");
 
-   if (listen(hserv_sock, 5) == -1) //listen 소켓을 서버 소켓으로 완성
+   if (listen(hserv_sock, 5) == -1)
       ErrorHandling("listen() error");
 
 
    clnt_adr_sz = sizeof(clnt_adr);
 
-   hclnt_sock = accept(hserv_sock, (struct sockaddr*)&clnt_adr, &clnt_adr_sz); // accept함수 호출
+   hclnt_sock = accept(hserv_sock, (struct sockaddr*)&clnt_adr, &clnt_adr_sz);
    if (hclnt_sock == -1)
       ErrorHandling("accept() error");
 
    while (1)
    {
-      str_len=read(hclnt_sock, buf, BUF_SIZE); //클라이언트 메세지를 받음
-      if (strcmp(write_memo, buf) == 0) // *참고
+      str_len=read(hclnt_sock, buf, BUF_SIZE);
+      if (strcmp(write_memo, buf) == 0)
          continue;
       else {
-         fp = fopen("do.txt", "w"); //fopen함수 이용하여 메모장 쓰기모드로 열기
-         fwrite(buf, strlen(buf), 1, fp); // 받은 메세지를 메모장에 쓰기
-         fclose(fp); // 메모장을 닫는다.
-         strcpy(write_memo, buf); // *받은 메세지를 write_memo 변수에 복사해놓음(계속 쓰는것을 방지)
+         fp = fopen("read.txt", "w"); 
+         fwrite(buf, strlen(buf), 1, fp);
+         fclose(fp); 
+         strcpy(write_memo, buf); 
          sleep(0.5);
-         printf("Message from Client : %s\n", buf); //받은 메세지를 표시
+         printf("Message from Client : %s\n", buf); 
       }
       for (j = 0; j < 100; j++) {
-         buf[j] = 0; //100글자까지 초기화
+         buf[j] = 0;
       }
 	
          
