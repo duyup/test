@@ -882,7 +882,7 @@ extern "C" void save_cv_jpg(mat_cv *img_src, const char *name)
 extern "C" void draw_detections_cv_v3(mat_cv* mat, detection *dets, int num, float thresh, char **names, image **alphabet, int classes, int ext_output)
 {
     try {
-        char detectname[BUFSIZE] = { 0, };
+        char detectname[BUFSIZE] = { 0, }; // 라벨 이름과 비교할 변수
         FILE* fp;
         cv::Mat *show_img = (cv::Mat*)mat;
         int i, j;
@@ -890,7 +890,7 @@ extern "C" void draw_detections_cv_v3(mat_cv* mat, detection *dets, int num, flo
         static int frame_id = 0;
         frame_id++;
         
-        fp = fopen("cha.txt","w");
+        fp = fopen("cha.txt","w"); // cha.txt를 초기화
         fclose(fp);
 
         for (i = 0; i < num; ++i) {
@@ -912,11 +912,11 @@ extern "C" void draw_detections_cv_v3(mat_cv* mat, detection *dets, int num, flo
                         printf("%s: %.0f%% ", names[j], dets[i].prob[j] * 100);
                         
                         
-                        if (strcmp(detectname, names[j])!= 0)
+                        if (strcmp(detectname, names[j])!= 0) // 라벨 이름의 길이가 0 이아니라면
 						{                            
                             if(dets[i].prob[j] * 100 > 70)
                             {
-                            fp = fopen("cha.txt","w");
+                            fp = fopen("cha.txt","w"); // cha.txt에 라벨 이름을 저장
                             fwrite(names[j], strlen(names[j]), 1, fp);         
                             fclose(fp);
                             }                         
